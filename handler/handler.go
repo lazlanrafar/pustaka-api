@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"pustaka-api/model"
+	"pustaka-api/book"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +29,7 @@ func QueryStringHandler(c *gin.Context) {
 }
 
 func PostBooksHandler(c *gin.Context){
-	var book model.Book
+	var book book.Book
 
 	if err := c.ShouldBindJSON(&book); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

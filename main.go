@@ -1,7 +1,7 @@
 package main
 
 import (
-	"pustaka-api/model"
+	"pustaka-api/book"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -15,43 +15,28 @@ func main(){
 		panic(err)
 	}
 
-	db.AutoMigrate(&model.Book{})
+	db.AutoMigrate(&book.Book{})
 
-	// ===================
-	//        CRUD
-	// ===================
+	bookRepository := book.NewRepository(db)
 
-	// TODO: CREATE
+	// books, _ := bookRepository.FindAll(1)
+	// fmt.Println(books)
 
-	// book := model.Book{
-	// 	Title: "Atomic Habits",
-	// 	Description: "A book about how to live a healthy life",
-	// 	Price: 100,
-	// 	Rating: 4,
-	// }
-	// db.Create(&book)
+	// book, _ := bookRepository.FindByID(1)
+	// fmt.Println(book)
 
-	// TODO: READ
+	book := book.Book{
+		Title: "Atomic Habits",
+		Description: "A book about how to live a healthy life",
+		Price: 100,
+		Rating: 4,
+	}
+	err = bookRepository.Create(&book)
+	if err != nil {
+		panic(err)
+	}
 
-	// var reports []model.Book
-	// db.Find(&reports)
-	// for _, report := range reports {
-	// 	fmt.Println(report)
-	// }
-
-	// TODO: UPDATE
-
-	// var report model.Book
-	// db.Where("title = ?", "Atomic Habits").First(&report)
-	// report.Title = "Atomic Habits (Updated)"
-	// db.Save(&report)
-
-	// TODO: DELETE
-
-	// var report model.Book
-	// db.Where("title = ?", "Atomic Habits (Updated)").First(&report)
-	// db.Delete(&report)
-
+	
 	// TODO: ROUTER
 
 	// router := gin.Default()

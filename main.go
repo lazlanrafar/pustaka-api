@@ -1,10 +1,8 @@
 package main
 
 import (
-	"pustaka-api/handler"
 	"pustaka-api/model"
 
-	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,14 +17,51 @@ func main(){
 
 	db.AutoMigrate(&model.Book{})
 
-	router := gin.Default()
+	// ===================
+	//        CRUD
+	// ===================
 
-	v1 := router.Group("/api/v1")
+	// TODO: CREATE
 
-	v1.GET("/", handler.RootHandler)
-	v1.GET("/path-variabel/:id", handler.PathVariabelHandler)
-	v1.GET("/query-string", handler.QueryStringHandler)
-	v1.POST("/books", handler.PostBooksHandler)
+	// book := model.Book{
+	// 	Title: "Atomic Habits",
+	// 	Description: "A book about how to live a healthy life",
+	// 	Price: 100,
+	// 	Rating: 4,
+	// }
+	// db.Create(&book)
 
-	router.Run(":8080")
+	// TODO: READ
+
+	// var reports []model.Book
+	// db.Find(&reports)
+	// for _, report := range reports {
+	// 	fmt.Println(report)
+	// }
+
+	// TODO: UPDATE
+
+	// var report model.Book
+	// db.Where("title = ?", "Atomic Habits").First(&report)
+	// report.Title = "Atomic Habits (Updated)"
+	// db.Save(&report)
+
+	// TODO: DELETE
+
+	// var report model.Book
+	// db.Where("title = ?", "Atomic Habits (Updated)").First(&report)
+	// db.Delete(&report)
+
+	// TODO: ROUTER
+
+	// router := gin.Default()
+
+	// v1 := router.Group("/api/v1")
+
+	// v1.GET("/", handler.RootHandler)
+	// v1.GET("/path-variabel/:id", handler.PathVariabelHandler)
+	// v1.GET("/query-string", handler.QueryStringHandler)
+	// v1.POST("/books", handler.PostBooksHandler)
+
+	// router.Run(":8080")
 }

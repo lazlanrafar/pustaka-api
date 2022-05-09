@@ -40,8 +40,8 @@ func queryStringHandler(c *gin.Context){
 }
 
 type Book struct {
-	Title string
-	Price int
+	Title string `json:"title" binding:"required"`
+	Price int `json:"price" binding:"required"`
 }
 
 func postBooksHandler(c *gin.Context){

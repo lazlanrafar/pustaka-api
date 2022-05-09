@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"pustaka-api/book"
 
 	"gorm.io/driver/mysql"
@@ -8,6 +9,7 @@ import (
 )
 
 func main(){
+	// TODO: Connect to the database
 	dsn := "root:@tcp(127.0.0.1:3306)/pustaka-api?charset=utf8mb4&parseTime=True&loc=Local"
   	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
@@ -15,26 +17,30 @@ func main(){
 		panic(err)
 	}
 
+	// TODO: migrate the schema
 	db.AutoMigrate(&book.Book{})
 
 	bookRepository := book.NewRepository(db)
+	bookService := book.NewService(bookRepository)
 
-	// books, _ := bookRepository.FindAll(1)
-	// fmt.Println(books)
+	books, _ := bookService.FindAll()
+	for index, book := range books {
+		fmt.Println(index + 1,".", book.Title)
+	}
 
-	// book, _ := bookRepository.FindByID(1)
+	// book, _ := bookService.FindByID(1)
 	// fmt.Println(book)
 
-	book := book.Book{
-		Title: "Atomic Habits",
-		Description: "A book about how to live a healthy life",
-		Price: 100,
-		Rating: 4,
-	}
-	err = bookRepository.Create(&book)
-	if err != nil {
-		panic(err)
-	}
+	// book := book.Book{
+	// 	Title: "Atomic Habits",
+	// 	Description: "A book about how to live a healthy life",
+	// 	Price: 100,
+	// 	Rating: 4,
+	// }
+	// err = bookService.Create(&book)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	
 	// TODO: ROUTER

@@ -1,6 +1,13 @@
 package model
 
+import "time"
+
 type Book struct {
-	Title string `json:"title" binding:"required"`
-	Price int    `json:"price" binding:"required"`
+	ID          int
+	Title       string
+	Description string
+	Price       int
+	Rating      int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }

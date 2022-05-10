@@ -16,8 +16,15 @@ func NewBookHandler(bookService book.Service) *bookHandler {
 	return &bookHandler{bookService}
 }
 
-func (handler *bookHandler) RootHandler(c *gin.Context) {
-	books, _ := handler.bookService.FindAll()
+func (handler *bookHandler) GetAll(c *gin.Context) {
+	books, err := handler.bookService.FindAll()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	
 	c.JSON(http.StatusOK, gin.H{
 		"data": books,
 	})

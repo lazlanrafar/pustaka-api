@@ -31,9 +31,9 @@ func main(){
 
 	v1 := router.Group("/api/v1")
 
-	v1.GET("/", bookHandler.RootHandler)
+	v1.GET("/", bookHandler.GetAll)
 	v1.GET("/book/:id", bookHandler.PathVariabelHandler)
-	v1.GET("/book", bookHandler.QueryStringHandler)
+	v1.GET("/book-query", bookHandler.QueryStringHandler)
 	v1.POST("/book", bookHandler.PostBooksHandler)
 
 	router.Run(":8080")

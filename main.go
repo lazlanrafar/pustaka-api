@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"pustaka-api/book"
+	"pustaka-api/handler"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,37 +23,18 @@ func main(){
 
 	bookRepository := book.NewRepository(db)
 	bookService := book.NewService(bookRepository)
-
-	books, _ := bookService.FindAll()
-	for index, book := range books {
-		fmt.Println(index + 1,".", book.Title)
-	}
-
-	// book, _ := bookService.FindByID(1)
-	// fmt.Println(book)
-
-	// book := book.Book{
-	// 	Title: "Atomic Habits",
-	// 	Description: "A book about how to live a healthy life",
-	// 	Price: 100,
-	// 	Rating: 4,
-	// }
-	// err = bookService.Create(&book)
-	// if err != nil {
-	// 	panic(err)
-	// }
-
+	bookHandler := handler.NewBookHandler(bookService)
 	
 	// TODO: ROUTER
 
-	// router := gin.Default()
+	router := gin.Default()
 
-	// v1 := router.Group("/api/v1")
+	v1 := router.Group("/api/v1")
 
-	// v1.GET("/", handler.RootHandler)
-	// v1.GET("/path-variabel/:id", handler.PathVariabelHandler)
-	// v1.GET("/query-string", handler.QueryStringHandler)
-	// v1.POST("/books", handler.PostBooksHandler)
+	v1.GET("/", bookHandler.RootHandler)
+	v1.GET("/book/:id", bookHandler.PathVariabelHandler)
+	v1.GET("/book", bookHandler.QueryStringHandler)
+	v1.POST("/book", bookHandler.PostBooksHandler)
 
-	// router.Run(":8080")
+	router.Run(":8080")
 }
